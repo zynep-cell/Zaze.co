@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#FAF9F6">
-    <title>Aura | Habit Tracker</title>
+    <meta name="theme-color" content="#FDFBF7">
+    <title>Aura | Proaktif Yaşam Sistemi</title>
     <style>
         :root {
-            /* Minimalist, Shibumi felsefesine uygun pastel renk paleti */
-            --bg-color: #FAF9F6;
-            --card-bg: #FFFFFF;
-            --text-main: #333333;
-            --text-muted: #9CA3AF;
+            /* Premium Zenginlik ve Sağlık Paleti */
+            --bg-color: #FDFBF7; /* Sıcak krem, lüks hissiyat */
+            --text-main: #2C3539; /* Kömür grisi, siyah kadar sert değil */
+            --text-muted: #8B959A;
             
-            /* Başlangıç (Yapılmadı) Durumu */
-            --uncompleted-bg: #FCF4F4;
-            --uncompleted-border: #F8EBEB;
-            --uncompleted-circle: #E8C5C5;
+            /* Başlangıç (Yapılmadı - Yumuşak Kırmızı/Somon) */
+            --red-bg: #FFF5F5;
+            --red-border: #FCE8E8;
+            --red-accent: #E5989B;
+            --red-text: #C47376;
             
-            /* Tamamlandı Durumu */
-            --completed-bg: #F4F9F6;
-            --completed-border: #E8F1EC;
-            --completed-circle: #C1D7D0;
+            /* Tamamlandı (Proaktif - Adaçayı Yeşili) */
+            --green-bg: #F4F9F5;
+            --green-border: #E3EFE6;
+            --green-accent: #84A98C;
+            --green-text: #52795B;
             
-            --shadow-subtle: 0 8px 24px rgba(0, 0, 0, 0.04);
+            --shadow-premium: 0 12px 36px rgba(0, 0, 0, 0.03);
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -42,7 +44,6 @@
             min-height: 100vh;
         }
 
-        /* Mobil Uygulama Görünümü */
         .app-container {
             width: 100%;
             max-width: 480px;
@@ -53,9 +54,9 @@
             position: relative;
         }
 
-        /* Üst Header ve Rolex Kadranı */
+        /* Lüks Header ve Takvim */
         .header {
-            padding: 40px 0 15px;
+            padding: 45px 0 20px;
             background: var(--bg-color);
             position: sticky;
             top: 0;
@@ -64,13 +65,12 @@
 
         .brand-title {
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             color: var(--text-main);
-            opacity: 0.8;
         }
 
         .calendar-wrapper {
@@ -79,13 +79,12 @@
             align-items: center;
         }
 
-        /* Kenarlardaki yumuşak geçiş efektleri (Gradient mask) */
         .calendar-wrapper::before, .calendar-wrapper::after {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 40px;
+            width: 50px;
             z-index: 2;
             pointer-events: none;
         }
@@ -104,140 +103,142 @@
             scroll-snap-type: x mandatory;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            padding: 10px calc(50% - 32px); /* Elemanı tam ortaya almak için */
+            padding: 10px calc(50% - 35px);
             scroll-behavior: smooth;
-            gap: 12px;
+            gap: 15px;
             width: 100%;
         }
 
-        .calendar-scroll::-webkit-scrollbar {
-            display: none;
-        }
+        .calendar-scroll::-webkit-scrollbar { display: none; }
 
         .date-item {
-            flex: 0 0 64px;
-            height: 80px;
+            flex: 0 0 70px;
+            height: 85px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             scroll-snap-align: center;
-            border-radius: 20px;
+            border-radius: 24px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: var(--transition-smooth);
             color: var(--text-muted);
         }
 
-        .date-item .day-name {
-            font-size: 0.7rem;
-            font-weight: 500;
+        .date-item .day-month {
+            font-size: 0.65rem;
+            font-weight: 600;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
         }
 
         .date-item .day-num {
-            font-size: 1.4rem;
-            font-weight: 400;
+            font-size: 1.5rem;
+            font-weight: 300;
         }
 
-        /* Aktif Gün Vurgusu */
         .date-item.active {
             background-color: var(--text-main);
             color: #FFFFFF;
             transform: scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(44, 53, 57, 0.15);
         }
+        .date-item.active .day-num { font-weight: 500; }
 
-        /* Görev Kartları Listesi */
+        /* Görev Kartları */
         .tasks-container {
             flex: 1;
-            padding: 20px 24px 40px;
+            padding: 20px 25px 50px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
             overflow-y: auto;
         }
 
+        /* Yumuşak Kırmızı (Başlangıç) Durumu */
         .task-card {
-            background-color: var(--uncompleted-bg);
-            border: 1px solid var(--uncompleted-border);
-            border-radius: 24px;
-            padding: 20px 24px;
+            background-color: var(--red-bg);
+            border: 1px solid var(--red-border);
+            border-radius: 28px;
+            padding: 22px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: var(--shadow-subtle);
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-premium);
         }
 
-        /* Dokunma hissiyatı */
-        .task-card:active {
-            transform: scale(0.97);
-        }
+        .task-card:active { transform: scale(0.96); }
 
+        /* Adaçayı Yeşili (Tamamlandı) Durumu */
         .task-card.completed {
-            background-color: var(--completed-bg);
-            border-color: var(--completed-border);
+            background-color: var(--green-bg);
+            border-color: var(--green-border);
         }
 
         .task-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
             pointer-events: none;
+            width: 80%;
         }
 
         .task-title {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            color: var(--text-main);
-            transition: color 0.3s;
+            color: var(--red-text);
+            transition: var(--transition-smooth);
+        }
+
+        .task-card.completed .task-title {
+            color: var(--green-text);
         }
 
         .task-desc {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
-        /* Animasyonlu Check Butonu */
+        /* Rolex Mekanizması Hissiyatlı Buton */
         .check-circle {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            border: 2px solid var(--uncompleted-circle);
+            border: 2px solid var(--red-accent);
             background: transparent;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: var(--transition-smooth);
             position: relative;
             pointer-events: none;
             flex-shrink: 0;
-            margin-left: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .task-card.completed .check-circle {
-            border-color: var(--completed-circle);
-            background: var(--completed-circle);
+            border-color: var(--green-accent);
+            background: var(--green-accent);
             transform: rotate(360deg);
         }
 
         .task-card.completed .check-circle::after {
             content: '';
-            position: absolute;
-            top: 6px;
-            left: 9px;
-            width: 4px;
-            height: 10px;
+            width: 6px;
+            height: 12px;
             border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
+            border-width: 0 2.5px 2.5px 0;
+            transform: rotate(45deg) translateY(-2px);
             opacity: 0;
-            animation: checkmarkFade 0.3s 0.2s forwards;
+            animation: checkmarkFade 0.4s 0.2s forwards;
         }
 
         @keyframes checkmarkFade {
-            0% { opacity: 0; transform: rotate(45deg) scale(0.5); }
-            100% { opacity: 1; transform: rotate(45deg) scale(1); }
+            0% { opacity: 0; transform: rotate(45deg) translateY(-2px) scale(0.5); }
+            100% { opacity: 1; transform: rotate(45deg) translateY(-2px) scale(1); }
         }
     </style>
 </head>
@@ -245,7 +246,7 @@
 
 <div class="app-container">
     <div class="header">
-        <div class="brand-title">Core & Aura</div>
+        <div class="brand-title">Aura Doğal Yaşam</div>
         <div class="calendar-wrapper">
             <div class="calendar-scroll" id="calendar-scroll">
                 <!-- JS ile günler buraya basılacak -->
@@ -259,22 +260,27 @@
 </div>
 
 <script>
-    // Kişisel Alışkanlıklar ve Görev Listesi
+    // Proaktif Yaşam Görevleri (Senin Belirlediğin Liste)
     const taskTemplates = [
-        { id: 't1', title: 'Güneş Kremi & Bariyer Onarımı', desc: 'UV koruması ve temel nem bariyeri desteği' },
-        { id: 't2', title: 'Manuel Lenf Masajı', desc: 'Yüz ve boyun bölgesi ödem/toksin atımı' },
-        { id: 't3', title: 'Yarım Ölü Böcek & Köprü', desc: 'Merkez bölge stabilizasyonu ve fiziksel aktivasyon' },
-        { id: 't4', title: 'Saç Derisi & Dalga Koruma', desc: 'Saç derisi tonik bakımı ve doğal dalga formunu koruma' },
-        { id: 't5', title: 'Hücresel Hidrasyon', desc: 'Günlük hedeflenen temiz su tüketimi' }
+        { id: 't1', title: 'Anatomik Farkındalık', desc: 'Duşta/banyo yaparken aynayla tüm vücut ve ben kontrolü yapıldı.' },
+        { id: 't2', title: 'Doğal D Vitamini', desc: 'Sabah (09:00-10:00) kol içleri 10-15 dk güneşe gösterildi.' },
+        { id: 't3', title: 'Hücresel Arınma', desc: 'Güneş kremi ve günün kiri ciltten tamamen arındırıldı, makyajsız uykuya geçildi.' }
     ];
 
-    // Günlük verilerin geçici olarak tutulacağı hafıza
-    const db = {}; 
+    // LocalStorage (Uygulama kapansa bile verileri saklar)
+    const STORAGE_KEY = 'aura_habit_tracker_db';
+    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    
     const calendarScroll = document.getElementById('calendar-scroll');
     const tasksContainer = document.getElementById('tasks-container');
-    const daysTr = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
+    const monthsTr = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
     
     let activeDateStr = '';
+
+    // Veritabanını kaydetme fonksiyonu
+    function saveDB() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    }
 
     // Takvimi Oluştur (Geçmiş 15 gün - Bugün - Gelecek 15 gün)
     function initCalendar() {
@@ -284,18 +290,19 @@
         for (let i = -15; i <= 15; i++) {
             let d = new Date();
             d.setDate(today.getDate() + i);
-            const dateStr = d.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+            
+            // Saat farklarını ekarte etmek için yerel tarih stringi oluştur
+            const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
             
             const dateEl = document.createElement('div');
             dateEl.className = 'date-item';
             dateEl.dataset.date = dateStr;
             
             dateEl.innerHTML = `
-                <div class="day-name">${daysTr[d.getDay()]}</div>
+                <div class="day-month">${monthsTr[d.getMonth()]}</div>
                 <div class="day-num">${d.getDate()}</div>
             `;
             
-            // Tıklayınca pürüzsüz merkeze kaydırma
             dateEl.addEventListener('click', () => {
                 dateEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             });
@@ -305,7 +312,6 @@
             if (i === 0) todayElement = dateEl;
         }
 
-        // Sayfa yüklendiğinde bugünü merkeze al
         setTimeout(() => {
             if (todayElement) {
                 todayElement.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
@@ -313,20 +319,22 @@
         }, 50);
     }
 
-    // Görevleri Ekrana Çizme Mantığı
+    // Görevleri Ekrana Çizme ve Renk Geçiş Mantığı
     function renderTasks(dateStr) {
         tasksContainer.innerHTML = '';
         
-        // Eğer o güne ait daha önce oluşturulmuş bir veri yoksa sıfırdan oluştur
+        // O güne ait veri yoksa, görevleri yapılmadı (false) olarak oluştur
         if (!db[dateStr]) {
             db[dateStr] = {};
             taskTemplates.forEach(t => db[dateStr][t.id] = false);
+            saveDB();
         }
         
         const currentTasks = db[dateStr];
 
         taskTemplates.forEach(task => {
             const card = document.createElement('div');
+            // Eğer tamamlandıysa 'completed' class'ı yeşil temayı aktifleştirir
             card.className = `task-card ${currentTasks[task.id] ? 'completed' : ''}`;
             
             card.innerHTML = `
@@ -337,17 +345,18 @@
                 <div class="check-circle"></div>
             `;
 
-            // Dopamin Animasyonu: Tıklandığında durumu değiştir
+            // Tıklama ile Kırmızıdan Yeşile geçiş
             card.addEventListener('click', () => {
                 const isCompleted = card.classList.toggle('completed');
                 db[dateStr][task.id] = isCompleted;
+                saveDB(); // Tıklamayı anında hafızaya kaydet
             });
 
             tasksContainer.appendChild(card);
         });
     }
 
-    // Rolex Kadranı Kaydırma (Scroll) Algılayıcı
+    // Rolex Kadranı Akıllı Kaydırma
     let scrollTimeout;
     calendarScroll.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
@@ -356,7 +365,6 @@
             let closestEl = null;
             let closestDist = Infinity;
 
-            // Ekranın merkezine en yakın olan tarihi bul
             document.querySelectorAll('.date-item').forEach(item => {
                 const itemCenter = item.offsetLeft + (item.clientWidth / 2) - calendarScroll.offsetLeft;
                 const dist = Math.abs(center - itemCenter);
@@ -373,7 +381,6 @@
                 
                 const newDateStr = closestEl.dataset.date;
                 
-                // Gün değiştiyse görevleri o güne göre tazele
                 if (newDateStr !== activeDateStr) {
                     activeDateStr = newDateStr;
                     renderTasks(activeDateStr);
@@ -382,7 +389,7 @@
         }, 100); 
     });
 
-    // Başlat
+    // Sayfa her açıldığında takvimi başlat
     initCalendar();
 
 </script>
