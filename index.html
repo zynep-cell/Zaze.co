@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#FDFBF7">
-    <title>Aura | Core & Zen Yaşam</title>
+    <title>Aura | Proaktif Yaşam</title>
     <style>
         :root {
             --bg-color: #FDFBF7; 
@@ -53,14 +53,12 @@
         .page-content {
             flex: 1;
             overflow-y: auto;
-            display: none; /* Varsayılan olarak gizli */
+            display: none;
             animation: fadeIn 0.4s ease forwards;
-            padding-bottom: 90px; /* Alt menü boşluğu */
+            padding-bottom: 90px;
         }
 
-        .page-content.active {
-            display: block;
-        }
+        .page-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -68,60 +66,34 @@
         }
 
         /* --- ANA SAYFA STİLLERİ --- */
-        .home-header {
-            padding: 40px 25px 20px;
-        }
+        .home-header { padding: 40px 25px 20px; }
         .greeting { font-size: 1.5rem; font-weight: 300; margin-bottom: 5px; }
         .sub-greeting { color: var(--text-muted); font-size: 0.9rem; }
         
         .progress-card {
-            margin: 20px 25px;
-            background: #FFF;
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: var(--shadow-premium);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            margin: 20px 25px; background: #FFF; border-radius: 30px; padding: 30px;
+            box-shadow: var(--shadow-premium); display: flex; align-items: center; justify-content: space-between;
         }
         
-        /* Yuvarlak İlerleme Çubuğu */
-        .progress-ring-container {
-            position: relative;
-            width: 80px;
-            height: 80px;
-        }
+        .progress-ring-container { position: relative; width: 80px; height: 80px; }
         .progress-ring {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
+            width: 100%; height: 100%; border-radius: 50%;
             background: conic-gradient(var(--green-accent) 0%, var(--green-border) 0%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition-smooth);
+            display: flex; justify-content: center; align-items: center; transition: var(--transition-smooth);
         }
         .progress-ring-inner {
-            width: 65px;
-            height: 65px;
-            background: #FFF;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--green-accent);
+            width: 65px; height: 65px; background: #FFF; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 1.2rem;
+            font-weight: 600; color: var(--green-accent);
         }
-
         .progress-text h3 { font-size: 1.1rem; margin-bottom: 5px; }
         .progress-text p { font-size: 0.8rem; color: var(--text-muted); }
 
         /* --- HABIT TRACKER STİLLERİ --- */
         .calendar-wrapper { position: relative; display: flex; align-items: center; margin-top: 20px; }
         .calendar-scroll {
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            scrollbar-width: none; padding: 10px calc(50% - 35px); scroll-behavior: smooth; gap: 15px; width: 100%;
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+            padding: 10px calc(50% - 35px); scroll-behavior: smooth; gap: 15px; width: 100%;
         }
         .calendar-scroll::-webkit-scrollbar { display: none; }
         .date-item {
@@ -153,17 +125,28 @@
             transform: rotate(45deg) translateY(-2px);
         }
 
-        /* --- THE CORE ZEN & HİKAYEM STİLLERİ --- */
+        /* --- EKOSİSTEM (LİNKLER) STİLLERİ --- */
+        .ecosystem-container { padding: 20px 25px; display: flex; flex-direction: column; gap: 16px; }
+        .repo-link-card {
+            display: block; text-decoration: none; background: #FFFFFF; padding: 22px 25px;
+            border-radius: 24px; box-shadow: var(--shadow-premium); border: 1px solid #F0F0F0;
+            transition: transform 0.3s ease;
+        }
+        .repo-link-card:active { transform: scale(0.97); }
+        .repo-title { color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .repo-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+        .arrow-icon { color: var(--green-accent); font-size: 1.2rem; }
+
+        /* --- HİKAYEM STİLLERİ --- */
         .generic-page { padding: 40px 25px; text-align: center; }
         .generic-page h2 { margin-bottom: 20px; font-weight: 400; letter-spacing: 2px; }
         .generic-page p { color: var(--text-muted); line-height: 1.6; }
 
-        /* --- ALT MENÜ (BOTTOM NAVIGATION) --- */
+        /* --- ALT MENÜ --- */
         .bottom-nav {
-            position: absolute; bottom: 0; width: 100%; height: 80px;
-            background-color: var(--nav-bg); box-shadow: var(--shadow-nav);
-            border-radius: 30px 30px 0 0; display: flex; justify-content: space-around;
-            align-items: center; padding: 0 10px 10px; z-index: 100;
+            position: absolute; bottom: 0; width: 100%; height: 80px; background-color: var(--nav-bg);
+            box-shadow: var(--shadow-nav); border-radius: 30px 30px 0 0; display: flex;
+            justify-content: space-around; align-items: center; padding: 0 10px 10px; z-index: 100;
         }
         .nav-item {
             display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -184,7 +167,6 @@
             <h1 class="greeting">Günaydın,</h1>
             <p class="sub-greeting">Kendine yatırım yapmak için harika bir gün.</p>
         </div>
-        
         <div class="progress-card">
             <div class="progress-text">
                 <h3>Günlük İlerleme</h3>
@@ -207,18 +189,63 @@
         <div class="tasks-container" id="tasks-container"></div>
     </div>
 
-    <!-- 3. THE CORE ZEN -->
-    <div id="page-zen" class="page-content generic-page">
-        <h2>The Core Zen</h2>
-        <p>Buraya kendi geliştirdiğin The Core Zen uygulamasının nefes, odaklanma veya rahatlama modüllerini entegre edeceğiz. Tasarımı tamamen Shibumi estetiğinde kalacak.</p>
-        <!-- The Core Zen kodları buraya gelecek -->
+    <!-- 3. EKOSİSTEM (REPOLARA LİNKLER) -->
+    <div id="page-ecosystem" class="page-content">
+        <div style="padding-top: 40px; margin-bottom: 10px; text-align: center; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Ekosistem</div>
+        <div class="ecosystem-container">
+            
+            <!-- Örnek Proje 1: The Core Zen -->
+            <a href="https://zynep-cell.github.io/the-core-habits-tracker/" target="_blank" class="repo-link-card">
+                <div class="repo-title">
+                    The Core Zen
+                    <span class="arrow-icon">↗</span>
+                </div>
+                <div class="repo-desc">Sakinleş, nefesine odaklan ve merkezine dön. (Uygulamaya git)</div>
+            </a>
+
+            <!-- Örnek Proje 2: Eğitim Flashcard vb. -->
+            <a href="https://zynep-cell.github.io/flashcard/" target="_blank" class="repo-link-card">
+                <div class="repo-title">
+                    Flash & Card
+                    <span class="arrow-icon">↗</span>
+                </div>
+                <div class="repo-desc">Eğitimin için flashcardla.</div>
+            </a>
+
+            <!-- Örnek Proje 3: Shibumi Aura -->
+            <a href="https://zynep-cell.github.io/Vizyon-ve-Atmosfer-Arsivi/#" target="_blank" class="repo-link-card">
+                <div class="repo-title">
+                    Shibumi Aura Shot Arşivi
+                    <span class="arrow-icon">↗</span>
+                </div>
+                <div class="repo-desc">Sadeliğin ve minimalist estetiğin arşivi.</div>
+            </a>
+
+            <!-- Örnek Proje 4: Pencere Radarı -->
+            <a href="https://zynep-cell.github.io/Pencere-Radari/" target="_blank" class="repo-link-card">
+                <div class="repo-title">
+                    Pencere Radarı
+                    <span class="arrow-icon">↗</span>
+                </div>
+                <div class="repo-desc">Kişisel dijital günlük ve takip modülü.</div>
+            </a>
+
+            <!-- Örnek Proje 5: Fotoğraf / Düzenleme -->
+            <a href="https://zynep-cell.github.io/RetroNow0.6/" target="_blank" class="repo-link-card">
+                <div class="repo-title">
+                    RetroNow Filtre
+                    <span class="arrow-icon">↗</span>
+                </div>
+                <div class="repo-desc">Fotoğraflarına retronow06 kat.</div>
+            </a>
+
+        </div>
     </div>
 
     <!-- 4. HİKAYEM (HAKKIMIZDA) -->
     <div id="page-story" class="page-content generic-page">
         <h2>Ben Kimim?</h2>
         <p>Markanın vizyonu, doğru bilinen kozmetik yanlışları ve sağlık entegrasyonlu cilt bakımının ardındaki felsefe. Buraya senin hikayen gelecek.</p>
-        <!-- Hikaye metinleri buraya gelecek -->
     </div>
 
     <!-- ALT MENÜ -->
@@ -231,9 +258,10 @@
             <div class="nav-icon">◎</div>
             <span>Tracker</span>
         </div>
-        <div class="nav-item" onclick="switchPage('page-zen', this)">
-            <div class="nav-icon">☯</div>
-            <span>Core Zen</span>
+        <!-- İkon ve İsim Değişti -->
+        <div class="nav-item" onclick="switchPage('page-ecosystem', this)">
+            <div class="nav-icon">⎈</div>
+            <span>Ekosistem</span>
         </div>
         <div class="nav-item" onclick="switchPage('page-story', this)">
             <div class="nav-icon">✎</div>
@@ -244,24 +272,16 @@
 </div>
 
 <script>
-    // --- SAYFA GEÇİŞ MANTIĞI ---
     function switchPage(pageId, navElement) {
-        // Tüm sayfaları gizle
         document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
-        // Tüm menü ikonlarının aktifliğini al
         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
         
-        // Seçileni aktif yap
         document.getElementById(pageId).classList.add('active');
         navElement.classList.add('active');
 
-        // Ana sayfaya geçildiyse ilerlemeyi güncelle
-        if(pageId === 'page-home') {
-            updateProgressRing();
-        }
+        if(pageId === 'page-home') updateProgressRing();
     }
 
-    // --- TRACKER MANTIĞI VE VERİTABANI ---
     const taskTemplates = [
         { id: 't1', title: 'Anatomik Farkındalık', desc: 'Duşta/banyoda aynayla tüm vücut/ben kontrolü.' },
         { id: 't2', title: 'Doğal D Vitamini', desc: 'Sabah güneşiyle kol içlerinden 15 dk sentez.' },
@@ -284,7 +304,7 @@
 
     function saveDB() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        updateProgressRing(); // Kaydedildiğinde ana sayfa grafiğini de güncelle
+        updateProgressRing();
     }
 
     function initCalendar() {
@@ -343,7 +363,6 @@
         });
     }
 
-    // İlerleme Çubuğu Güncelleme
     function updateProgressRing() {
         if(!db[todayDateStr]) return;
         const tasks = db[todayDateStr];
@@ -354,11 +373,9 @@
         
         document.getElementById('progress-percent').innerText = `${percent}%`;
         const ring = document.getElementById('daily-progress');
-        // Yüzdeye göre renk dolumu
         ring.style.background = `conic-gradient(var(--green-accent) ${percent}%, var(--green-border) ${percent}%)`;
     }
 
-    // Kaydırma Algılayıcı
     let scrollTimeout;
     calendarScroll.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
@@ -386,7 +403,7 @@
     });
 
     initCalendar();
-    updateProgressRing(); // Açılışta ana sayfa çubuğunu güncelle
+    updateProgressRing();
 
 </script>
 </body>
